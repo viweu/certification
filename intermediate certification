@@ -1,23 +1,116 @@
-// Задача 2: Напишите программу вычисления функции Аккермана с помощью рекурсии. 
-// Даны два неотрицательных числа m и n.
+// Задача 1: Задайте значения M и N.
+// Напишите программу, которая выведет все натуральные числа в промежутке от M до N.
+// Использовать рекурсию, не использовать циклы.
+// Пример:
+// M = 1; N = 5 -> "1, 2, 3, 4, 5" 
+// M = 4; N = 8 -> "4, 5, 6, 7, 8"
 
-int m = InputNumbers("Введите m: ");
-int n = InputNumbers("Введите n: ");
-
-int functionAkkerman = Ack(m, n);
-
-Console.Write($"Функция Аккермана = {functionAkkerman} ");
-
-int Ack(int m, int n)
+void OutNumbers(int M, int N)
 {
-  if (m == 0) return n + 1;
-  else if (n == 0) return Ack(m - 1, 1);
-  else return Ack(m - 1, Ack(m, n - 1));
+    if(M > N) return;
+    Console.Write($"{M}, ");
+    OutNumbers(M+1, N);
+}
+void Main()
+{
+    Console.Write("Введите начальное число (M): ");
+    int M = Convert.ToInt32(Console.ReadLine());
+
+    Console.Write("Введите конечное число (N): ");
+    int N = Convert.ToInt32(Console.ReadLine());
+
+    OutNumbers(M, N);
 }
 
-int InputNumbers(string input) 
+Main();
+
+
+// Задача 2: Напишите программу вычисления функции Аккермана с помощью рекурсии.
+// Даны два неотрицательных числа m и n. 
+// Примеры:
+// m = 2, n = 3 -> A(m,n) = 29
+
+int Ackerman(int n, int m)
 {
-  Console.Write(input);
-  int output = Convert.ToInt32(Console.ReadLine());
-  return output;
+    if( n == 0) return m + 1;
+    else if (m == 0) return Ackerman(n - 1, 1);
+    else return Ackerman(n - 1, Ackerman(n, m - 1));
 }
+void Main()
+{
+    Console.Write("Введите первое число (n): ");
+    int n = Convert.ToInt32(Console.ReadLine());
+
+    Console.Write("Введите второе число (m): ");
+    int m = Convert.ToInt32(Console.ReadLine());
+
+    Console.WriteLine();
+
+    int total = Ackerman(n, m);
+    Console.Write($"n = {n}, m = {m} -> A(n, m) = {total}");
+}
+
+Main();
+
+
+// Задача 3: Задайте произвольный массив. 
+// Выведете его элементы, начиная с конца. Использовать рекурсию, не использовать циклы.
+// Пример:
+// [1, 2, 5, 0, 10, 34] => 34 10 0 5 2 1
+
+int[] GenerateArray()
+{
+    string[] str;
+    Console.WriteLine("Введите числа через , :");
+    str = Console.ReadLine().Split(",");
+
+    int[] numbers = new int[str.Length];
+    for(int i = 0; i < str.Length; i++)
+    {
+        numbers[i] = Convert.ToInt32(str[i]);
+    }
+
+    return numbers;
+}
+
+void PrintArray(int[] array)
+{
+    Console.WriteLine();
+    Console.Write("Изначальный Массив: [");
+    for(int i = 0; i < array.Length; i++)
+    {
+        if (i == array.Length - 1) Console.Write(array[i] + "]");
+        else Console.Write(array[i] + ", ");
+    }
+
+}
+
+void NewGenerateArray(int[] array, int len_array)
+{
+    if(len_array < 0) return;
+    else
+    {
+        Console.Write(array[len_array] + " ");
+
+        NewGenerateArray(array, len_array - 1);
+
+    }
+}
+
+void Main()
+{
+    int[] array = GenerateArray();
+    PrintArray(array);
+
+    int len_array = array.Length - 1;
+    Console.WriteLine();
+
+    Console.Write("Обратный массив: ");
+    NewGenerateArray(array, len_array);
+
+}
+
+Main();
+
+
+
